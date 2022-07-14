@@ -49,12 +49,15 @@ const stytchProps: StytchProps = {
   publicToken: process.env.NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN || '',
   callbacks: {
     onEvent: (data) => {
-      // TODO: check whether the user exists in your DB
       if (data.eventData.type === 'USER_EVENT_TYPE') {
-        console.log({
-          userId: data.eventData.userId,
-          email: data.eventData.email,
-        })
+        if (data.eventData.userId != undefined && data.eventData.userId != null) {
+          console.log({
+            userId: data.eventData.userId,
+            email: data.eventData.email,
+          })
+        } else {
+          console.warn("The user is not found. Data: ", data);
+         }
       }
     },
     onSuccess: (data) => console.log(data),
